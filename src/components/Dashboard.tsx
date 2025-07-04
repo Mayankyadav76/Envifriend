@@ -1,11 +1,14 @@
 import React from 'react';
-import { TreePine, Droplets, Award, TrendingUp, Camera, MapPin, Calendar } from 'lucide-react';
+import { TreePine, Droplets, Award, TrendingUp, Camera, MapPin, Calendar, Plus, Upload, Sensors } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 const Dashboard: React.FC = () => {
+  const { user } = useAuth();
+
   const stats = [
-    { label: 'Trees Planted', value: '42', icon: <TreePine className="h-6 w-6" />, color: 'green' },
+    { label: 'Trees Planted', value: user?.treesPlanted.toString() || '0', icon: <TreePine className="h-6 w-6" />, color: 'green' },
     { label: 'Trees Survived', value: '38', icon: <TreePine className="h-6 w-6" />, color: 'blue' },
-    { label: 'GreenPoints', value: '2,850', icon: <Award className="h-6 w-6" />, color: 'yellow' },
+    { label: 'GreenPoints', value: user?.greenPoints.toLocaleString() || '0', icon: <Award className="h-6 w-6" />, color: 'yellow' },
     { label: 'CO₂ Offset', value: '156 kg', icon: <TrendingUp className="h-6 w-6" />, color: 'purple' },
   ];
 
@@ -24,16 +27,28 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  const handlePlantNewTree = () => {
+    alert('Plant New Tree feature - This would open a form to register a new tree planting');
+  };
+
+  const handleUploadPhoto = () => {
+    alert('Upload Tree Photo feature - This would open camera/file picker for tree progress photos');
+  };
+
+  const handleCheckSensor = () => {
+    alert('IoT Sensor Check - This would show real-time soil moisture and environmental data');
+  };
+
   return (
     <div className="space-y-6">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl p-8 text-white">
-        <h2 className="text-3xl font-bold mb-2">Welcome back, Priya!</h2>
+        <h2 className="text-3xl font-bold mb-2">Welcome back, {user?.name}!</h2>
         <p className="text-green-100 mb-6">You're making a real difference in your community. Keep growing!</p>
         <div className="flex items-center space-x-4">
           <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
             <div className="text-2xl font-bold">District Rank</div>
-            <div className="text-green-100">#7 in Delhi NCR</div>
+            <div className="text-green-100">#{user?.rank} in {user?.location}</div>
           </div>
           <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
             <div className="text-2xl font-bold">Green Guardian</div>
@@ -97,7 +112,10 @@ const Dashboard: React.FC = () => {
                   <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(tree.status)}`}>
                     {tree.status === 'healthy' ? 'Healthy' : tree.status === 'needs-water' ? 'Needs Water' : 'Critical'}
                   </span>
-                  <button className="p-2 text-gray-400 hover:text-green-600 rounded-lg hover:bg-green-50 transition-colors">
+                  <button 
+                    onClick={handleUploadPhoto}
+                    className="p-2 text-gray-400 hover:text-green-600 rounded-lg hover:bg-green-50 transition-colors"
+                  >
                     <Camera className="h-4 w-4" />
                   </button>
                 </div>
@@ -112,14 +130,26 @@ const Dashboard: React.FC = () => {
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
             <div className="space-y-3">
-              <button className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium">
-                Plant New Tree
+              <button 
+                onClick={handlePlantNewTree}
+                className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium flex items-center justify-center space-x-2"
+              >
+                <Plus className="h-5 w-5" />
+                <span>Plant New Tree</span>
               </button>
-              <button className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                Upload Tree Photo
+              <button 
+                onClick={handleUploadPhoto}
+                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center space-x-2"
+              >
+                <Upload className="h-5 w-5" />
+                <span>Upload Tree Photo</span>
               </button>
-              <button className="w-full bg-yellow-600 text-white py-3 px-4 rounded-lg hover:bg-yellow-700 transition-colors font-medium">
-                Check IoT Sensor
+              <button 
+                onClick={handleCheckSensor}
+                className="w-full bg-yellow-600 text-white py-3 px-4 rounded-lg hover:bg-yellow-700 transition-colors font-medium flex items-center justify-center space-x-2"
+              >
+                <Sensors className="h-5 w-5" />
+                <span>Check IoT Sensor</span>
               </button>
             </div>
           </div>

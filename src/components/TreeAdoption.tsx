@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TreePine, MapPin, User, Heart, Star, Filter } from 'lucide-react';
+import { TreePine, MapPin, User, Heart, Star, Filter, MessageCircle, Eye } from 'lucide-react';
 
 const TreeAdoption: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'available' | 'sponsored'>('available');
@@ -77,6 +77,22 @@ const TreeAdoption: React.FC = () => {
       lastUpdate: '1 day ago'
     }
   ];
+
+  const handleAdoptTree = (treeId: number) => {
+    alert(`Adopting tree with ID: ${treeId}. This would open the payment gateway and adoption process.`);
+  };
+
+  const handleViewDetails = (treeId: number) => {
+    alert(`Viewing details for tree ID: ${treeId}. This would show detailed information about the tree and planter.`);
+  };
+
+  const handleViewUpdates = (treeId: number) => {
+    alert(`Viewing updates for sponsored tree ID: ${treeId}. This would show photo timeline and growth progress.`);
+  };
+
+  const handleMessagePlanter = (planterName: string) => {
+    alert(`Opening chat with ${planterName}. This would open a messaging interface.`);
+  };
 
   return (
     <div className="space-y-6">
@@ -195,11 +211,17 @@ const TreeAdoption: React.FC = () => {
                 </div>
 
                 <div className="flex space-x-2">
-                  <button className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium">
+                  <button 
+                    onClick={() => handleAdoptTree(tree.id)}
+                    className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium"
+                  >
                     Adopt Tree
                   </button>
-                  <button className="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                    View Details
+                  <button 
+                    onClick={() => handleViewDetails(tree.id)}
+                    className="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center"
+                  >
+                    <Eye className="h-4 w-4" />
                   </button>
                 </div>
               </div>
@@ -247,11 +269,19 @@ const TreeAdoption: React.FC = () => {
                   Adopted: {tree.adoptedDate} • Last update: {tree.lastUpdate}
                 </div>
                 <div className="flex space-x-2">
-                  <button className="text-green-600 hover:text-green-700 font-medium text-sm">
-                    View Updates
+                  <button 
+                    onClick={() => handleViewUpdates(tree.id)}
+                    className="text-green-600 hover:text-green-700 font-medium text-sm flex items-center space-x-1"
+                  >
+                    <Eye className="h-4 w-4" />
+                    <span>View Updates</span>
                   </button>
-                  <button className="text-blue-600 hover:text-blue-700 font-medium text-sm">
-                    Message Planter
+                  <button 
+                    onClick={() => handleMessagePlanter(tree.planterName)}
+                    className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center space-x-1"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    <span>Message Planter</span>
                   </button>
                 </div>
               </div>

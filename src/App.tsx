@@ -1,12 +1,36 @@
 import React, { useState } from 'react';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import TreeAdoption from './components/TreeAdoption';
 import Leaderboard from './components/Leaderboard';
 import Certificates from './components/Certificates';
+import LoginPage from './components/auth/LoginPage';
+import SignupPage from './components/auth/SignupPage';
 
-function App() {
+const AppContent: React.FC = () => {
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return authMode === 'login' ? (
+      <LoginPage onSwitchToSignup={() => setAuthMode('signup')} />
+    ) : (
+      <SignupPage onSwitchToLogin={() => setAuthMode('login')} />
+    );
+  }
 
   const renderCurrentPage = () => {
     switch (currentPage) {
@@ -30,6 +54,14 @@ function App() {
         {renderCurrentPage()}
       </main>
     </div>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
