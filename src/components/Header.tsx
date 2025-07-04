@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Leaf, Bell, User, Menu, LogOut, Settings } from 'lucide-react';
+import { Leaf, User, Menu, LogOut, Settings } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 interface HeaderProps {
@@ -55,13 +55,6 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onPageChange }) => {
 
           {/* Right side actions */}
           <div className="flex items-center space-x-4">
-            <button className="relative p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors">
-              <Bell className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                3
-              </span>
-            </button>
-            
             {/* User Menu */}
             <div className="relative">
               <button
