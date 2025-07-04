@@ -1,5 +1,5 @@
 import React from 'react';
-import { TreePine, Droplets, Award, TrendingUp, Camera, MapPin, Calendar, Plus, Upload, Sensors } from 'lucide-react';
+import { TreePine, Droplets, Award, TrendingUp, Camera, MapPin, Calendar, Plus, Upload, Scissors as Sensors } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const Dashboard: React.FC = () => {
