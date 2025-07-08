@@ -47,7 +47,7 @@ const Leaderboard: React.FC = () => {
     },
     {
       rank: 5,
-      name: 'Vikram Singh',
+      name: 'Mayank Yadav',
       location: 'Jaipur',
       treesPlanted: 58,
       greenPoints: 2940,
